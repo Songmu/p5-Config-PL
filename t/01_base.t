@@ -2,6 +2,8 @@ use strict;
 use warnings;
 use utf8;
 use Test::More;
+use File::Spec;
+use Cwd;
 
 BEGIN { use_ok 'Config::PL' }
 
@@ -13,6 +15,14 @@ subtest 'dirname(__FILE__)' => sub {
 
 subtest 'Cwd' => sub {
     my $config = config_do 't/config/ok.pl';
+    isa_ok $config, 'HASH';
+    is $config->{ok}, 1;
+};
+
+subtest 'Abs' => sub {
+    my $cwd = getcwd;
+    my $abs = File::Spec->catfile($cwd, qw/t config ok.pl/);
+    my $config = config_do $abs;
     isa_ok $config, 'HASH';
     is $config->{ok}, 1;
 };
