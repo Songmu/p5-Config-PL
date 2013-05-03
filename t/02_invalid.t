@@ -22,6 +22,16 @@ subtest 'empty args' => sub {
 subtest ':path' => sub {
     package BlahBlah;
     use Test::More;
+    eval 'use Config::PL qw/config_do/';
+    ok !$@;
+
+    my %config = config_do('config/ok.pl');
+    is $config{ok}, 1;
+};
+
+subtest ':path' => sub {
+    package BlahBlahBlah;
+    use Test::More;
     eval 'use Config::PL qw!:path t/dummy!';
     ok !$@;
 
