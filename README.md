@@ -1,6 +1,6 @@
 # NAME
 
-Config::PL - Using .pl file as a configuration
+Config::PL - Using '.pl' file as a configuration
 
 # SYNOPSIS
 
@@ -10,7 +10,7 @@ Config::PL - Using .pl file as a configuration
 
 # DESCRIPTION
 
-Config::PL is a utility module for using .pl file as a configuration.
+Config::PL is a utility module for using '.pl' file as a configuration.
 
 This module provides `config_do` function for loading '.pl' file.
 
