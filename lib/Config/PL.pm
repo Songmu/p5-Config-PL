@@ -9,13 +9,34 @@ use Carp ();
 use Cwd ();
 use File::Basename ();
 
-use parent 'Exporter';
 our @EXPORT = qw/config_do/;
+our %CONFIG;
+
+sub import {
+    my ($pkg, @args) = @_;
+    my $caller = caller;
+
+    my @export;
+    if (@args) {
+        push @export, shift(@args) while $args[0] && $args[0] !~ '^:';
+        my %conf = @args;
+        $CONFIG{path} = $conf{':path'} if exists $conf{':path'};
+    }
+    @export = @EXPORT unless @export;
+
+    for my $func (@export) {
+        Carp::croak "'$func' is not exportable function" unless grep {$_ eq $func} @EXPORT;
+
+        no strict 'refs';
+        *{"$caller\::$func"} = \&$func;
+    }
+}
 
 sub config_do($) {
     my $config_file = shift;
     my (undef, $file,) = caller;
     local @INC = (Cwd::getcwd, File::Basename::dirname($file));
+    push @INC, $CONFIG{path} if defined $CONFIG{path};
 
     my $config = do $config_file;
     Carp::croak $@ if $@;
@@ -76,6 +97,12 @@ You can easily load another configuration file in the config files as follows.
     config_do "$ENV{PLACK_ENV}.pl";
 
 You need not write C<< do File::Spec->catfile(File::Basename::dirname(__FILE__), 'config.pl') ... >> any more!
+
+You can add search path by specifying path as follows. (EXPERIMENTAL)
+
+    use Config::PL ':path' => 'path/config/dir';
+
+B<THIS SOFTWARE IS IN ALPHA QUALITY. IT MAY CHANGE THE API WITHOUT NOTICE.>
 
 =head1 FUNCTION
 

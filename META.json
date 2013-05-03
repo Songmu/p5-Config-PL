@@ -42,8 +42,6 @@
       },
       "runtime" : {
          "requires" : {
-            "Exporter" : "0",
-            "parent" : "0",
             "perl" : "5.008001"
          }
       },

@@ -23,7 +23,6 @@ my %args = (
         'Module::Build' => 0.38,
     },
 
-    no_index    => { 'directory' => [ 'inc' ] },
     name        => 'Config-PL',
     module_name => 'Config::PL',
 

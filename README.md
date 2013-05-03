@@ -43,6 +43,12 @@ You can easily load another configuration file in the config files as follows.
 
 You need not write `do File::Spec->catfile(File::Basename::dirname(__FILE__), 'config.pl') ...` any more!
 
+You can add search path by specifying path as follows. (EXPERIMENTAL)
+
+    use Config::PL ':path' => 'path/config/dir';
+
+__THIS SOFTWARE IS IN ALPHA QUALITY. IT MAY CHANGE THE API WITHOUT NOTICE.__
+
 # FUNCTION
 
 ## `my ($conf|%conf) = config_do $file_name;`
