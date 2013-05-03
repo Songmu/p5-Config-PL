@@ -19,7 +19,7 @@ subtest 'empty args' => sub {
     ok Config::PL->can('config_do');
 };
 
-subtest ':path' => sub {
+subtest 'explicit export' => sub {
     package BlahBlah;
     use Test::More;
     eval 'use Config::PL qw/config_do/';
@@ -33,6 +33,16 @@ subtest ':path' => sub {
     package BlahBlahBlah;
     use Test::More;
     eval 'use Config::PL qw!:path t/dummy!';
+    ok !$@;
+
+    my %config = config_do('config/ok2.pl');
+    is $config{ok}, 2;
+};
+
+subtest 'explicit export and :path' => sub {
+    package BlahBlahBlahBlah;
+    use Test::More;
+    eval 'use Config::PL qw!config_do :path t/dummy!';
     ok !$@;
 
     my %config = config_do('config/ok2.pl');
