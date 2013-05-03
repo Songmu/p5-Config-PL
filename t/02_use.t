@@ -49,4 +49,15 @@ subtest 'explicit export and :path' => sub {
     is $config{ok}, 2;
 };
 
+subtest '@INC is limited' => sub {
+    package BlahBlahBlahBlahBlah;
+    use Test::More;
+    eval 'use Config::PL;';
+    local $@;
+    eval {
+        config_do('Config/PL.pm');
+    };
+    ok $@;
+};
+
 done_testing;
