@@ -35,10 +35,15 @@ sub import {
 sub config_do($) {
     my $config_file = shift;
     my (undef, $file,) = caller;
-    local @INC = (Cwd::getcwd, File::Basename::dirname($file));
-    push @INC, $CONFIG{path} if defined $CONFIG{path};
 
-    my $config = do $config_file;
+    my $config;
+    {
+        local @INC = (Cwd::getcwd, File::Basename::dirname($file));
+        push @INC, $CONFIG{path} if defined $CONFIG{path};
+
+        $config = do $config_file;
+    }
+
     Carp::croak $@ if $@;
     Carp::croak $! unless defined $config;
     unless (ref $config eq 'HASH') {
