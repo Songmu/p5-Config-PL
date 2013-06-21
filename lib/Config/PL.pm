@@ -74,7 +74,7 @@ Config::PL is a utility module for using '.pl' file as a configuration.
 
 This module provides C<config_do> function for loading '.pl' file.
 
-Using '.pl' file which returns HashRef as a configuration is good idea.
+Using '.pl' file which returns HashRef as a configuration is a good idea.
 We can write flexible and DRY configuration by it.
 (But, sometimes it becomes too complicated :P)
 
@@ -85,7 +85,7 @@ But, there is some problems and L<< Config::PL >> cares these problems.
 =head2 Ensure returns HashRef
 
 C<< do EXPR >> function of Perl core is not sane because it does not die
-when the file contains parse error or is not found.
+when the file contains errors or is not found.
 
 C<config_do> function croaks errors and ensures that the returned value is HashRef.
 
@@ -93,7 +93,7 @@ C<config_do> function croaks errors and ensures that the returned value is HashR
 
 C<< do "$file" >> searches files in C<< @INC >>. It sometimes causes intended file loading.
 
-C<< config_do >> function limits the search path only in C<< cwd >> and C<< basename(__FILE__) >>.
+C<< config_do >> function limits the search path only in C<< cwd >> and C<< dirname(__FILE__) >>.
 
 You can easily load another configuration file in the config files as follows.
 
@@ -105,7 +105,7 @@ You need not write C<< do File::Spec->catfile(File::Basename::dirname(__FILE__),
 
 You can add search path by specifying path as follows. (EXPERIMENTAL)
 
-    use Config::PL ':path' => 'path/config/dir';
+    use Config::PL ':path' => '/path/config/dir';
 
 B<THIS SOFTWARE IS IN ALPHA QUALITY. IT MAY CHANGE THE API WITHOUT NOTICE.>
 
