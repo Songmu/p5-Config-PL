@@ -36,16 +36,15 @@ sub config_do($) {
     my $config_file = shift;
     my (undef, $file,) = caller;
 
-    my $config;
-    {
+    my ($config, $errno) = do {
         local @INC = (Cwd::getcwd, File::Basename::dirname($file));
         push @INC, $CONFIG{path} if defined $CONFIG{path};
 
-        $config = do $config_file;
-    }
+        (scalar do $config_file, $!);
+    };
 
     Carp::croak $@ if $@;
-    Carp::croak $! unless defined $config;
+    Carp::croak $errno unless defined $config;
     unless (ref $config eq 'HASH') {
         Carp::croak "$config_file does not return HashRef.";
     }
