@@ -20,7 +20,7 @@ We can write flexible and DRY configuration by it.
 
 `do "$file"` idiom is often used for loading configuration.
 
-But, there is some problems and [Config::PL](http://search.cpan.org/perldoc?Config::PL) cares these problems.
+But, there is some problems and [Config::PL](https://metacpan.org/pod/Config::PL) cares these problems.
 
 ## Ensure returns HashRef
 
@@ -47,7 +47,7 @@ You can add search path by specifying path as follows. (EXPERIMENTAL)
 
     use Config::PL ':path' => '/path/config/dir';
 
-__THIS SOFTWARE IS IN ALPHA QUALITY. IT MAY CHANGE THE API WITHOUT NOTICE.__
+**THIS SOFTWARE IS IN ALPHA QUALITY. IT MAY CHANGE THE API WITHOUT NOTICE.**
 
 # FUNCTION
 
