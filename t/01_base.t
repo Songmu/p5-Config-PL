@@ -4,6 +4,7 @@ use utf8;
 use Test::More;
 use File::Spec;
 use Cwd;
+use POSIX qw( locale_h setlocale );
 
 BEGIN { use_ok 'Config::PL' }
 
@@ -54,11 +55,13 @@ subtest 'invalid config' => sub {
 };
 
 subtest 'file not found' => sub {
+    setlocale(LC_MESSAGES, 'en_US.UTF-8');
     local $@;
     eval {
         config_do 'config/blahblah.pl';
     };
     like $@, qr/^No such file or directory/;
+    setlocale(LC_MESSAGES, '');
 };
 
 done_testing;
